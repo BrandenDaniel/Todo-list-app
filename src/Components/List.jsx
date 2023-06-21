@@ -3,12 +3,12 @@ import { FaTrash } from "react-icons/fa";
 
 const List = ({ items, removeItem, setCheck }) => {
   return (
-    <div className="grocery-list">
+    <>
       {items.map((item) => {
         const { id, title, completed } = item;
 
         return (
-          <article key={id} className="grocery-item">
+          <article key={id} className="grocery-list__item">
             <div>
               <input
                 type="checkbox"
@@ -21,19 +21,17 @@ const List = ({ items, removeItem, setCheck }) => {
               </label>
             </div>
 
-            <div className="btn-container">
-              <button
-                type="button"
-                className="delete-btn"
-                onClick={() => removeItem(id)}
-              >
-                <FaTrash />
-              </button>
-            </div>
+            <button
+              type="button"
+              className="delete-btn"
+              onClick={() => removeItem(id)}
+            >
+              <FaTrash />
+            </button>
           </article>
         );
       })}
-    </div>
+    </>
   );
 };
 

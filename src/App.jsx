@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import List from "./List";
-import Alert from "./Alert";
+import List from "./Components/List";
+import Alert from "./Components/Alert";
+import { FaPlus } from "react-icons/fa";
 
 const getLocalStorage = () => {
   let list = localStorage.getItem("list");
@@ -68,8 +69,21 @@ function App() {
   }, [list]);
 
   return (
-    <section className="section-center">
-      <form className="grocery-form" onSubmit={handleSubmit}>
+    <section className="grocery-list grocery-list--container">
+      <h1>
+        G'day! <span>Let's get things done.</span>
+      </h1>
+
+      {list.length > 0 && (
+        <div className="grocery-list__item-container">
+          <List items={list} removeItem={removeItem} setCheck={setCheck} />
+          <button className="grocery-list__clear" onClick={clearList}>
+            Clear list
+          </button>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="grocery-list__form">
         {alert.show && (
           <Alert
             msg={alert.msg}
@@ -78,29 +92,17 @@ function App() {
             list={list}
           />
         )}
-        <h3>grocery bud</h3>
-
-        <div className="form-control">
-          <input
-            type="text"
-            className="grocery"
-            placeholder="e.g. eggs"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <button type="submit" className="submit-btn">
-            submit
-          </button>
-        </div>
+        <input
+          type="text"
+          className="grocery"
+          placeholder="e.g. eggs"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button type="submit" className="submit-btn">
+          <FaPlus />
+        </button>
       </form>
-      {list.length > 0 && (
-        <div className="grocery-container">
-          <List items={list} removeItem={removeItem} setCheck={setCheck} />
-          <button className="clear-btn" onClick={clearList}>
-            clear items
-          </button>
-        </div>
-      )}
     </section>
   );
 }
