@@ -15,8 +15,6 @@ const getLocalStorage = () => {
 function App() {
   const [name, setName] = useState("");
   const [list, setList] = useState(getLocalStorage());
-  const [isEditing, setIsEditing] = useState(false);
-  const [editID, setEditID] = useState(null);
   const [alert, setAlert] = useState({
     show: false,
     msg: "",
@@ -28,36 +26,31 @@ function App() {
 
     if (!name) {
       showAlert(true, "danger", "Please enter a value.");
-    } else if (name && isEditing) {
-      setList(
-        list.map((item) => {
-          if (item.id === editID) {
-            return { ...item, title: name };
-          }
-          return item;
-        })
-      );
-      setName("");
-      setEditID(null);
-      setIsEditing(false);
-      showAlert(true, "success", "Item value changed");
     } else {
       showAlert(true, "success", "Item added to your list!");
-      const newItem = { id: new Date().getTime().toString(), title: name };
+      const newItem = {
+        id: new Date().getTime().toString(),
+        title: name,
+        completed: false,
+      };
       setList([...list, newItem]);
       setName("");
     }
   };
 
-  const showAlert = (show = false, type = "", msg = "") => {
-    setAlert({ show, type, msg });
+  const setCheck = (id) => {
+    setList(
+      list.map((item) => {
+        if (item.id === id) {
+          return { ...item, completed: !item.completed };
+        }
+        return item;
+      })
+    );
   };
 
-  const editItem = (id) => {
-    const specificItem = list.find((item) => item.id === id);
-    setIsEditing(true);
-    setEditID(id);
-    setName(specificItem.title);
+  const showAlert = (show = false, type = "", msg = "") => {
+    setAlert({ show, type, msg });
   };
 
   const removeItem = (id) => {
@@ -96,13 +89,13 @@ function App() {
             onChange={(e) => setName(e.target.value)}
           />
           <button type="submit" className="submit-btn">
-            {isEditing ? "edit" : "submit"}
+            submit
           </button>
         </div>
       </form>
       {list.length > 0 && (
         <div className="grocery-container">
-          <List items={list} removeItem={removeItem} editItem={editItem} />
+          <List items={list} removeItem={removeItem} setCheck={setCheck} />
           <button className="clear-btn" onClick={clearList}>
             clear items
           </button>
