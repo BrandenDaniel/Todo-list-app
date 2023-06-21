@@ -71,7 +71,7 @@ function App() {
   return (
     <section className="grocery-list grocery-list--container">
       <h1>
-        G'day! <span>Let's get things done.</span>
+        G'day! <span>- Let's get things done.</span>
       </h1>
 
       {list.length > 0 && (
