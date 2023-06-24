@@ -70,15 +70,13 @@ function App() {
 
   return (
     <section className="grocery-list grocery-list--container">
-      <h1>
-        G'day! <span>- Let's get things done.</span>
-      </h1>
+      <h1>To-do list app</h1>
 
       {list.length > 0 && (
         <div className="grocery-list__item-container">
           <List items={list} removeItem={removeItem} setCheck={setCheck} />
           <button className="grocery-list__clear" onClick={clearList}>
-            Clear list
+            clear
           </button>
         </div>
       )}

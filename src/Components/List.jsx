@@ -21,11 +21,7 @@ const List = ({ items, removeItem, setCheck }) => {
               </label>
             </div>
 
-            <button
-              type="button"
-              className="delete-btn"
-              onClick={() => removeItem(id)}
-            >
+            <button type="button" onClick={() => removeItem(id)}>
               <FaTrash />
             </button>
           </article>
